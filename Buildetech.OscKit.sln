@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Buildetech.OscKit", "src\Buildetech.OscKit\Buildetech.OscKit.csproj", "{D9A44DD7-59A8-466C-9588-76D64C800469}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Buildetech.OscKit.Tests", "src\Buildetech.OscKit.Tests\Buildetech.OscKit.Tests.csproj", "{4D6B302C-8B16-4664-BF1C-68D86171A851}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D9A44DD7-59A8-466C-9588-76D64C800469}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D9A44DD7-59A8-466C-9588-76D64C800469}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D9A44DD7-59A8-466C-9588-76D64C800469}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D9A44DD7-59A8-466C-9588-76D64C800469}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D6B302C-8B16-4664-BF1C-68D86171A851}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D6B302C-8B16-4664-BF1C-68D86171A851}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D6B302C-8B16-4664-BF1C-68D86171A851}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D6B302C-8B16-4664-BF1C-68D86171A851}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

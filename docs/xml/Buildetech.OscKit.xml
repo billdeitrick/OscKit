@@ -1,0 +1,662 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Buildetech.OscKit</name>
+    </assembly>
+    <members>
+        <member name="T:Buildetech.OscKit.IOscServiceFactory">
+            <summary>
+            Provides methods to create OSC client and server services.
+            </summary>
+        </member>
+        <member name="M:Buildetech.OscKit.IOscServiceFactory.CreateClient(System.String,System.Int32)">
+            <summary>
+            Create an OSC client service.
+            </summary>
+            <param name="address">The remote address to which OSC messages should be sent.</param>
+            <param name="port">The port that should be used at the remote address.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Buildetech.OscKit.IOscServiceFactory.CreateServer(System.Int32)">
+            <summary>
+            Create an OSC server service.
+            </summary>
+            <param name="port">The port on which we should listen for incoming OSC messages.</param>
+            <returns></returns>
+        </member>
+        <member name="T:Buildetech.OscKit.OscKitExtensionMethods">
+            <summary>
+            Extension methods for registering OSC Kit services in an IServiceCollection.
+            </summary>
+        </member>
+        <member name="M:Buildetech.OscKit.OscKitExtensionMethods.AddOscClientService(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.String,System.Int32)">
+            <summary>
+            Add a singleton instance of IOscClientService to the DI container.
+            </summary>
+            <param name="services">The IServiceCollection object.</param>
+            <param name="ipAddress">The IP Address of the OSC Server with which this client will communicate.</param>
+            <param name="port">The port over which this client will transmit OSC messages.</param>
+        </member>
+        <member name="M:Buildetech.OscKit.OscKitExtensionMethods.AddOscServerService(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Int32)">
+            <summary>
+            Add a singleton instance of IOscServerService to the DI container.
+            </summary>
+            <param name="services">The IServiceCollection object.</param>
+            <param name="port">The port on which the server should listen for OSC messges.</param>
+        </member>
+        <member name="M:Buildetech.OscKit.OscMessageValues.GetTypeTag(System.Int32)">
+            <summary>
+            Maps an OscCore type tag to an OscKit type tag
+            </summary>
+            <param name="index">The index of the value in the received message.</param>
+            <returns>The type tag at the specified index.</returns>
+        </member>
+        <member name="M:Buildetech.OscKit.OscMessageValues.ForEachElement(System.Action{System.Int32,Buildetech.OscKit.OscTypeTag})">
+            <summary>
+            Runs a callback for each value in the message.
+            </summary>
+            <param name="action">The callback to run.</param>
+        </member>
+        <member name="T:Buildetech.OscKit.OscServiceFactory">
+            <inheritdoc/>
+        </member>
+        <member name="M:Buildetech.OscKit.OscServiceFactory.CreateClient(System.String,System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Buildetech.OscKit.OscServiceFactory.CreateServer(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Buildetech.OscKit.OscTypeTag">
+            <summary>
+            Represents the supported OSC type tags in Buildetech.OscKit.
+            These tags are used to identify the type of each element in an OSC message.
+            </summary>
+        </member>
+        <member name="F:Buildetech.OscKit.OscTypeTag.False">
+            <summary>False boolean value (F, non-standard).</summary>
+        </member>
+        <member name="F:Buildetech.OscKit.OscTypeTag.Infinitum">
+            <summary>Infinitum value (I, non-standard).</summary>
+        </member>
+        <member name="F:Buildetech.OscKit.OscTypeTag.Nil">
+            <summary>Nil/null value (N, non-standard).</summary>
+        </member>
+        <member name="F:Buildetech.OscKit.OscTypeTag.AltTypeString">
+            <summary>Alternate type string (S, non-standard).</summary>
+        </member>
+        <member name="F:Buildetech.OscKit.OscTypeTag.True">
+            <summary>True boolean value (T, non-standard).</summary>
+        </member>
+        <member name="F:Buildetech.OscKit.OscTypeTag.ArrayStart">
+            <summary>Array start ([, non-standard).</summary>
+        </member>
+        <member name="F:Buildetech.OscKit.OscTypeTag.ArrayEnd">
+            <summary>Array end (], non-standard).</summary>
+        </member>
+        <member name="F:Buildetech.OscKit.OscTypeTag.Blob">
+            <summary>Binary data blob (b, STANDARD).</summary>
+        </member>
+        <member name="F:Buildetech.OscKit.OscTypeTag.AsciiChar32">
+            <summary>ASCII character (c, non-standard).</summary>
+        </member>
+        <member name="F:Buildetech.OscKit.OscTypeTag.Float64">
+            <summary>64-bit floating point number (d, non-standard).</summary>
+        </member>
+        <member name="F:Buildetech.OscKit.OscTypeTag.Float32">
+            <summary>32-bit floating point number (f, STANDARD).</summary>
+        </member>
+        <member name="F:Buildetech.OscKit.OscTypeTag.Int64">
+            <summary>64-bit integer (h, non-standard).</summary>
+        </member>
+        <member name="F:Buildetech.OscKit.OscTypeTag.Int32">
+            <summary>32-bit integer (i, STANDARD).</summary>
+        </member>
+        <member name="F:Buildetech.OscKit.OscTypeTag.Midi">
+            <summary>Midi message (m, non-standard).</summary>
+        </member>
+        <member name="F:Buildetech.OscKit.OscTypeTag.Color32">
+            <summary>32-bit RGBA color (r, non-standard).</summary>
+        </member>
+        <member name="F:Buildetech.OscKit.OscTypeTag.String">
+            <summary>String value (s, STANDARD).</summary>
+        </member>
+        <member name="F:Buildetech.OscKit.OscTypeTag.TimeTag">
+            <summary>OSC time tag (t, non-standard).</summary>
+        </member>
+        <member name="T:Buildetech.OscKit.Services.IOscClientService">
+            <summary>
+            Represents a service for sending OSC (Open Sound Control) messages to a remote host.
+            </summary>
+        </member>
+        <member name="M:Buildetech.OscKit.Services.IOscClientService.Send(System.String)">
+            <summary>
+            Sends an OSC message to the specified address.
+            </summary>
+            <param name="address">The OSC address to send the message to.</param>
+        </member>
+        <member name="M:Buildetech.OscKit.Services.IOscClientService.Send(System.String,System.Int32)">
+            <summary>
+            Sends an OSC message with an integer element to the specified address.
+            </summary>
+            <param name="address">The OSC address to send the message to.</param>
+            <param name="element">The integer element to include in the message.</param>
+        </member>
+        <member name="M:Buildetech.OscKit.Services.IOscClientService.Send(System.String,Buildetech.OscKit.Types.OscInt)">
+            <summary>
+            Sends an OSC message with an OscInt element to the specified address.
+            </summary>
+            <param name="address">The OSC address to send the message to.</param>
+            <param name="element">The OscInt element to include in the message.</param>
+        </member>
+        <member name="M:Buildetech.OscKit.Services.IOscClientService.Send(System.String,System.Single)">
+            <summary>
+            Sends an OSC message with a float element to the specified address.
+            </summary>
+            <param name="address">The OSC address to send the message to.</param>
+            <param name="element">The float element to include in the message.</param>
+        </member>
+        <member name="M:Buildetech.OscKit.Services.IOscClientService.Send(System.String,Buildetech.OscKit.Types.OscFloat)">
+            <summary>
+            Sends an OSC message with an OscFloat element to the specified address.
+            </summary>
+            <param name="address">The OSC address to send the message to.</param>
+            <param name="element">The OscFloat element to include in the message.</param>
+        </member>
+        <member name="M:Buildetech.OscKit.Services.IOscClientService.Send(System.String,System.String)">
+            <summary>
+            Sends an OSC message with a string element to the specified address.
+            </summary>
+            <param name="address">The OSC address to send the message to.</param>
+            <param name="element">The string element to include in the message.</param>
+        </member>
+        <member name="M:Buildetech.OscKit.Services.IOscClientService.Send(System.String,Buildetech.OscKit.Types.OscString)">
+            <summary>
+            Sends an OSC message with an OscString element to the specified address.
+            </summary>
+            <param name="address">The OSC address to send the message to.</param>
+            <param name="element">The OscString element to include in the message.</param>
+        </member>
+        <member name="M:Buildetech.OscKit.Services.IOscClientService.Send(System.String,System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Sends an OSC message with a byte array to the specified address.
+            </summary>
+            <param name="address">The OSC address to send the message to.</param>
+            <param name="bytes">The byte array to include in the message.</param>
+            <param name="length">The number of bytes to send.</param>
+            <param name="start">The starting index in the byte array.</param>
+        </member>
+        <member name="M:Buildetech.OscKit.Services.IOscClientService.Send(System.String,Buildetech.OscKit.Types.OscByteArray)">
+            <summary>
+            Sends an OSC message with a byte array to the specified address.
+            </summary>
+            <param name="address">The OSC address to send the message to.</param>
+            <param name="element">The OscByteArray element to include in the message. The entire array will be sent.</param>
+        </member>
+        <member name="M:Buildetech.OscKit.Services.IOscClientService.Send(System.String,System.Double)">
+            <summary>
+            Sends an OSC message with a double element to the specified address.
+            </summary>
+            <param name="address">The OSC address to send the message to.</param>
+            <param name="element">The double element to include in the message.</param>
+        </member>
+        <member name="M:Buildetech.OscKit.Services.IOscClientService.Send(System.String,Buildetech.OscKit.Types.OscDouble)">
+            <summary>
+            Sends an OSC message with an OscDouble element to the specified address.
+            </summary>
+            <param name="address">The OSC address to send the message to.</param>
+            <param name="element">The OscDouble element to include in the message.</param>
+        </member>
+        <member name="M:Buildetech.OscKit.Services.IOscClientService.Send(System.String,System.Int64)">
+            <summary>
+            Sends an OSC message with a long element to the specified address.
+            </summary>
+            <param name="address">The OSC address to send the message to.</param>
+            <param name="element">The long element to include in the message.</param>
+        </member>
+        <member name="M:Buildetech.OscKit.Services.IOscClientService.Send(System.String,Buildetech.OscKit.Types.OscLong)">
+            <summary>
+            Sends an OSC message with an OscLong element to the specified address.
+            </summary>
+            <param name="address">The OSC address to send the message to.</param>
+            <param name="element">The OscLong element to include in the message.</param>
+        </member>
+        <member name="M:Buildetech.OscKit.Services.IOscClientService.Send(System.String,Buildetech.OscKit.Types.OscColor32)">
+            <summary>
+            Sends an OSC message with a OscColor32 element to the specified address.
+            </summary>
+            <param name="address">The OSC address to send the message to.</param>
+            <param name="element">The OscColor32 element to include in the message.</param>
+        </member>
+        <member name="M:Buildetech.OscKit.Services.IOscClientService.Send(System.String,Buildetech.OscKit.Types.OscMidiMessage)">
+            <summary>
+            Sends an OSC message with a OscMidiMessage element to the specified address.
+            </summary>
+            <param name="address">The OSC address to send the message to.</param>
+            <param name="element">The OscMidiMessage element to include in the message.</param>
+        </member>
+        <member name="M:Buildetech.OscKit.Services.IOscClientService.Send(System.String,System.Char)">
+            <summary>
+            Sends an OSC message with a char element to the specified address.
+            </summary>
+            <param name="address">The OSC address to send the message to.</param>
+            <param name="element">The char element to include in the message.</param>
+        </member>
+        <member name="M:Buildetech.OscKit.Services.IOscClientService.Send(System.String,Buildetech.OscKit.Types.OscChar)">
+            <summary>
+            Sends an OSC message with an OscChar element to the specified address.
+            </summary>
+            <param name="address">The OSC address to send the message to.</param>
+            <param name="element">The OscChar element to include in the message.</param>
+        </member>
+        <member name="M:Buildetech.OscKit.Services.IOscClientService.Send(System.String,System.Boolean)">
+            <summary>
+            Sends an OSC message with a boolean element to the specified address.
+            </summary>
+            <param name="address">The OSC address to send the message to.</param>
+            <param name="element">The boolean element to include in the message.</param>
+        </member>
+        <member name="M:Buildetech.OscKit.Services.IOscClientService.Send(System.String,Buildetech.OscKit.Types.OscTrue)">
+            <summary>
+            Sends an OSC message with an OscTrue element to the specified address.
+            </summary>
+            <param name="address">The OSC address to send the message to.</param>
+            <param name="element">The OscTrue element to include in the message.</param>
+        </member>
+        <member name="M:Buildetech.OscKit.Services.IOscClientService.Send(System.String,Buildetech.OscKit.Types.OscFalse)">
+            <summary>
+            Sends an OSC message with an OscFalse element to the specified address.
+            </summary>
+            <param name="address">The OSC address to send the message to.</param>
+            <param name="element">The OscFalse element to include in the message.</param>
+        </member>
+        <member name="M:Buildetech.OscKit.Services.IOscClientService.Send(System.String,Buildetech.OscKit.Types.OscNil)">
+            <summary>
+            Sends an OSC message with an OscNil value to the specified address.
+            </summary>
+            <param name="address">The OSC address to send the message to.</param>
+            <param name="element">The OscNil element to include in the message.</param>
+        </member>
+        <member name="M:Buildetech.OscKit.Services.IOscClientService.Send(System.String,Buildetech.OscKit.Types.OscInfinitum)">
+            <summary>
+            Sends an OSC message with an OscInfinitum value to the specified address.
+            </summary>
+            <param name="address">The OSC address to send the message to.</param>
+            <param name="element">The OscInfinitum element to include in the message.</param>
+        </member>
+        <member name="M:Buildetech.OscKit.Services.IOscClientService.Send(System.String,System.DateTime)">
+            <summary>
+            Sends an OSC message with a element to the specified address.
+            </summary>
+            <param name="address">The OSC address to send the message to.</param>
+            <param name="element">The element to include in the message.</param>
+        </member>
+        <member name="M:Buildetech.OscKit.Services.IOscClientService.Send(System.String,Buildetech.OscKit.Types.OscTimestamp)">
+            <summary>
+            Sends an OSC message with an OscTimestamp to the specified address.
+            </summary>
+            <param name="address">The OSC address to send the message to.</param>
+            <param name="element">The OscTimestamp element to include in the message.</param>
+        </member>
+        <member name="M:Buildetech.OscKit.Services.IOscClientService.Send(System.String,Buildetech.OscKit.Types.IOscWriteable[])">
+            <summary>
+            Sends a custom OSC message with multiple elements to the specified address.
+            </summary>
+            <param name="address">The OSC address to send the message to.</param>
+            <param name="elements">The array of elements to be sent.</param>
+        </member>
+        <member name="M:Buildetech.OscKit.Services.IOscClientService.SendNil(System.String)">
+            <summary>
+            Sends an OSC message with a nil value to the specified address.
+            </summary>
+            <param name="address">The OSC address to send the message to.</param>
+        </member>
+        <member name="M:Buildetech.OscKit.Services.IOscClientService.SendInfinitum(System.String)">
+            <summary>
+            Sends an OSC message with an infinitum value to the specified address.
+            </summary>
+            <param name="address">The OSC address to send the message to.</param>
+        </member>
+        <member name="M:Buildetech.OscKit.Services.IOscClientService.Dispose">
+            <summary>
+            Releases all resources used by the <see cref="T:Buildetech.OscKit.Services.OscClientService"/>.
+            </summary>
+        </member>
+        <member name="T:Buildetech.OscKit.Services.IOscServerService">
+            <summary>
+            Represents a service for receiving and handling OSC (Open Sound Control) messages received from remote hosts.
+            </summary>
+        </member>
+        <member name="M:Buildetech.OscKit.Services.IOscServerService.TryAddMethod(System.String,System.Action{Buildetech.OscKit.OscMessageValues})">
+            <summary>
+            Adds a method callback for the specified OSC address.
+            </summary>
+            <param name="address">The OSC address to monitor.</param>
+            <param name="action">The callback to invoke when a message is received at the address.</param>
+            <returns>True if the method was added; otherwise, false.</returns>
+        </member>
+        <member name="M:Buildetech.OscKit.Services.IOscServerService.RemoveMethod(System.String,System.Action{Buildetech.OscKit.OscMessageValues})">
+            <summary>
+            Removes a method callback for the specified OSC address.
+            </summary>
+            <param name="address">The OSC address to remove the callback from.</param>
+            <param name="action">The callback to remove.</param>
+            <returns>True if the method was removed; otherwise, false.</returns>
+        </member>
+        <member name="M:Buildetech.OscKit.Services.IOscServerService.RemoveAddress(System.String)">
+            <summary>
+            Removes all method callbacks for the specified OSC address.
+            </summary>
+            <param name="address">The OSC address to remove.</param>
+            <returns>True if the address was removed; otherwise, false.</returns>
+        </member>
+        <member name="M:Buildetech.OscKit.Services.IOscServerService.AddMonitorCallback(Buildetech.OscKit.MonitorCallback)">
+            <summary>
+            Adds a monitor callback that is invoked for every OSC message received.
+            </summary>
+            <param name="callback">The monitor callback to add.</param>
+        </member>
+        <member name="M:Buildetech.OscKit.Services.IOscServerService.RemoveMonitorCallback(Buildetech.OscKit.MonitorCallback)">
+            <summary>
+            Removes a monitor callback.
+            </summary>
+            <param name="callback">The monitor callback to remove.</param>
+            <returns>True if the callback was removed; otherwise, false.</returns>
+        </member>
+        <member name="M:Buildetech.OscKit.Services.IOscServerService.Dispose">
+            <summary>
+            Releases all resources used by the <see cref="T:Buildetech.OscKit.Services.OscServerService"/>.
+            </summary>
+        </member>
+        <member name="T:Buildetech.OscKit.Services.OscClientService">
+            <summary>
+            Service for sending OSC (Open Sound Control) messages to a remote host.
+            </summary>
+        </member>
+        <member name="M:Buildetech.OscKit.Services.OscClientService.#ctor(System.String,System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Buildetech.OscKit.Services.OscClientService"/> class with the specified IP address and port.
+            </summary>
+            <param name="ipAddress">The IP address of the OSC server.</param>
+            <param name="port">The port number of the OSC server.</param>
+        </member>
+        <member name="M:Buildetech.OscKit.Services.OscClientService.Send(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Buildetech.OscKit.Services.OscClientService.Send(System.String,System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Buildetech.OscKit.Services.OscClientService.Send(System.String,Buildetech.OscKit.Types.OscInt)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Buildetech.OscKit.Services.OscClientService.Send(System.String,System.Single)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Buildetech.OscKit.Services.OscClientService.Send(System.String,Buildetech.OscKit.Types.OscFloat)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Buildetech.OscKit.Services.OscClientService.Send(System.String,System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Buildetech.OscKit.Services.OscClientService.Send(System.String,Buildetech.OscKit.Types.OscString)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Buildetech.OscKit.Services.OscClientService.Send(System.String,System.Byte[],System.Int32,System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Buildetech.OscKit.Services.OscClientService.Send(System.String,Buildetech.OscKit.Types.OscByteArray)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Buildetech.OscKit.Services.OscClientService.Send(System.String,System.Double)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Buildetech.OscKit.Services.OscClientService.Send(System.String,Buildetech.OscKit.Types.OscDouble)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Buildetech.OscKit.Services.OscClientService.Send(System.String,System.Int64)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Buildetech.OscKit.Services.OscClientService.Send(System.String,Buildetech.OscKit.Types.OscLong)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Buildetech.OscKit.Services.OscClientService.Send(System.String,Buildetech.OscKit.Types.OscColor32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Buildetech.OscKit.Services.OscClientService.Send(System.String,Buildetech.OscKit.Types.OscMidiMessage)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Buildetech.OscKit.Services.OscClientService.Send(System.String,System.Char)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Buildetech.OscKit.Services.OscClientService.Send(System.String,Buildetech.OscKit.Types.OscChar)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Buildetech.OscKit.Services.OscClientService.Send(System.String,System.Boolean)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Buildetech.OscKit.Services.OscClientService.Send(System.String,Buildetech.OscKit.Types.OscTrue)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Buildetech.OscKit.Services.OscClientService.Send(System.String,Buildetech.OscKit.Types.OscFalse)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Buildetech.OscKit.Services.OscClientService.SendNil(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Buildetech.OscKit.Services.OscClientService.Send(System.String,Buildetech.OscKit.Types.OscNil)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Buildetech.OscKit.Services.OscClientService.SendInfinitum(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Buildetech.OscKit.Services.OscClientService.Send(System.String,Buildetech.OscKit.Types.OscInfinitum)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Buildetech.OscKit.Services.OscClientService.Send(System.String,System.DateTime)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Buildetech.OscKit.Services.OscClientService.Send(System.String,Buildetech.OscKit.Types.OscTimestamp)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Buildetech.OscKit.Services.OscClientService.Send(System.String,Buildetech.OscKit.Types.IOscWriteable[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:Buildetech.OscKit.Services.OscClientService.Dispose">
+            <summary>
+            Releases all resources used by the <see cref="T:Buildetech.OscKit.Services.OscClientService"/>.
+            </summary>
+        </member>
+        <member name="T:Buildetech.OscKit.Services.OscServerService">
+            <summary>
+            Service class for managing an OSC server, allowing the addition and removal of method and monitor callbacks for OSC messages.
+            </summary>
+        </member>
+        <member name="M:Buildetech.OscKit.Services.OscServerService.#ctor(System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Buildetech.OscKit.Services.OscServerService"/> class and starts listening on the specified port.
+            </summary>
+            <param name="port">The port to listen for OSC messages.</param>
+        </member>
+        <member name="M:Buildetech.OscKit.Services.OscServerService.TryAddMethod(System.String,System.Action{Buildetech.OscKit.OscMessageValues})">
+            <inheritdoc/>
+        </member>
+        <member name="M:Buildetech.OscKit.Services.OscServerService.RemoveMethod(System.String,System.Action{Buildetech.OscKit.OscMessageValues})">
+            <inheritdoc/>
+        </member>
+        <member name="M:Buildetech.OscKit.Services.OscServerService.RemoveAddress(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Buildetech.OscKit.Services.OscServerService.AddMonitorCallback(Buildetech.OscKit.MonitorCallback)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Buildetech.OscKit.Services.OscServerService.RemoveMonitorCallback(Buildetech.OscKit.MonitorCallback)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Buildetech.OscKit.Services.OscServerService.Dispose">
+            <inheritdoc/>
+        </member>
+        <member name="T:Buildetech.OscKit.Types.IOscWriteable">
+            <summary>
+            Indicates an object is writeable to an OSC Writer instance.
+            </summary>
+        </member>
+        <member name="M:Buildetech.OscKit.Types.IOscWriteable.WriteTo(Buildetech.OscCore.OscWriter)">
+            <summary>
+            Writes the current object bytes to the supplied OscWriter instance.
+            </summary>
+            <param name="writer">The writer instance to which the current object should be written.</param>
+        </member>
+        <member name="M:Buildetech.OscKit.Types.IOscWriteable.GetOscTypeTag">
+            <summary>
+            Get the type tag string for the current object.
+            </summary>
+            <returns>The type tag string for the current object.</returns>
+        </member>
+        <member name="M:Buildetech.OscKit.Types.OscByteArray.WriteTo(Buildetech.OscCore.OscWriter)">
+            <inheritdoc />
+        </member>
+        <member name="M:Buildetech.OscKit.Types.OscByteArray.GetOscTypeTag">
+            <inheritdoc />
+        </member>
+        <member name="M:Buildetech.OscKit.Types.OscChar.#ctor">
+            <summary>
+            Initialize a new instance of the class with zero value.
+            </summary>
+        </member>
+        <member name="M:Buildetech.OscKit.Types.OscChar.#ctor(System.Char)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Buildetech.OscKit.Types.OscChar"/> class with the specified char value.
+            </summary>
+            <param name="value">The char value to be wrapped.</param>
+        </member>
+        <member name="M:Buildetech.OscKit.Types.OscChar.WriteTo(Buildetech.OscCore.OscWriter)">
+            <inheritdoc />
+        </member>
+        <member name="M:Buildetech.OscKit.Types.OscChar.GetOscTypeTag">
+            <inheritdoc />
+        </member>
+        <member name="M:Buildetech.OscKit.Types.OscColor32.WriteTo(Buildetech.OscCore.OscWriter)">
+            <inheritdoc />
+        </member>
+        <member name="M:Buildetech.OscKit.Types.OscColor32.GetOscTypeTag">
+            <inheritdoc />
+        </member>
+        <member name="M:Buildetech.OscKit.Types.OscDouble.#ctor">
+            <summary>
+            Initialize a new instance of the class with zero value.
+            </summary>
+        </member>
+        <member name="M:Buildetech.OscKit.Types.OscDouble.#ctor(System.Double)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Buildetech.OscKit.Types.OscDouble"/> class with the specified double value.
+            </summary>
+            <param name="value">The double value to be wrapped.</param>
+        </member>
+        <member name="M:Buildetech.OscKit.Types.OscDouble.WriteTo(Buildetech.OscCore.OscWriter)">
+            <inheritdoc />
+        </member>
+        <member name="M:Buildetech.OscKit.Types.OscDouble.GetOscTypeTag">
+            <inheritdoc />
+        </member>
+        <member name="M:Buildetech.OscKit.Types.OscFalse.WriteTo(Buildetech.OscCore.OscWriter)">
+            <inheritdoc />
+        </member>
+        <member name="M:Buildetech.OscKit.Types.OscFalse.GetOscTypeTag">
+            <inheritdoc />
+        </member>
+        <member name="M:Buildetech.OscKit.Types.OscFloat.#ctor">
+            <summary>
+            Initialize a new instance of the class with zero value.
+            </summary>
+        </member>
+        <member name="M:Buildetech.OscKit.Types.OscFloat.#ctor(System.Single)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Buildetech.OscKit.Types.OscFloat"/> class with the specified float value.
+            </summary>
+            <param name="value">The float value to be wrapped.</param>
+        </member>
+        <member name="M:Buildetech.OscKit.Types.OscFloat.WriteTo(Buildetech.OscCore.OscWriter)">
+            <inheritdoc />
+        </member>
+        <member name="M:Buildetech.OscKit.Types.OscFloat.GetOscTypeTag">
+            <inheritdoc />
+        </member>
+        <member name="M:Buildetech.OscKit.Types.OscInfinitum.WriteTo(Buildetech.OscCore.OscWriter)">
+            <inheritdoc />
+        </member>
+        <member name="M:Buildetech.OscKit.Types.OscInfinitum.GetOscTypeTag">
+            <inheritdoc />
+        </member>
+        <member name="M:Buildetech.OscKit.Types.OscInt.#ctor">
+            <summary>
+            Initialize a new instance of the class with zero value.
+            </summary>
+        </member>
+        <member name="M:Buildetech.OscKit.Types.OscInt.#ctor(System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Buildetech.OscKit.Types.OscInt"/> class with the specified integer value.
+            </summary>
+            <param name="value">The integer value to be wrapped.</param>
+        </member>
+        <member name="M:Buildetech.OscKit.Types.OscInt.WriteTo(Buildetech.OscCore.OscWriter)">
+            <inheritdoc />
+        </member>
+        <member name="M:Buildetech.OscKit.Types.OscInt.GetOscTypeTag">
+            <inheritdoc />
+        </member>
+        <member name="M:Buildetech.OscKit.Types.OscLong.#ctor">
+            <summary>
+            Initialize a new instance of the class with zero value.
+            </summary>
+        </member>
+        <member name="M:Buildetech.OscKit.Types.OscLong.#ctor(System.Int64)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Buildetech.OscKit.Types.OscLong"/> class with the specified long value.
+            </summary>
+            <param name="value">The long value to be wrapped.</param>
+        </member>
+        <member name="M:Buildetech.OscKit.Types.OscLong.WriteTo(Buildetech.OscCore.OscWriter)">
+            <inheritdoc />
+        </member>
+        <member name="M:Buildetech.OscKit.Types.OscLong.GetOscTypeTag">
+            <inheritdoc />
+        </member>
+        <member name="M:Buildetech.OscKit.Types.OscMidiMessage.GetOscTypeTag">
+            <inheritdoc />
+        </member>
+        <member name="M:Buildetech.OscKit.Types.OscNil.WriteTo(Buildetech.OscCore.OscWriter)">
+            <inheritdoc />
+        </member>
+        <member name="M:Buildetech.OscKit.Types.OscNil.GetOscTypeTag">
+            <inheritdoc />
+        </member>
+        <member name="M:Buildetech.OscKit.Types.OscString.#ctor">
+            <summary>
+            Initialize a new instance of the class with an empty string.
+            </summary>
+        </member>
+        <member name="M:Buildetech.OscKit.Types.OscString.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Buildetech.OscKit.Types.OscString"/> class with the specified string value.
+            </summary>
+            <param name="value">The string value to be wrapped.</param>
+        </member>
+        <member name="M:Buildetech.OscKit.Types.OscString.WriteTo(Buildetech.OscCore.OscWriter)">
+            <inheritdoc />
+        </member>
+        <member name="M:Buildetech.OscKit.Types.OscString.GetOscTypeTag">
+            <inheritdoc />
+        </member>
+        <member name="M:Buildetech.OscKit.Types.OscTimestamp.WriteTo(Buildetech.OscCore.OscWriter)">
+            <inheritdoc />
+        </member>
+        <member name="M:Buildetech.OscKit.Types.OscTimestamp.GetOscTypeTag">
+            <inheritdoc />
+        </member>
+        <member name="M:Buildetech.OscKit.Types.OscTrue.WriteTo(Buildetech.OscCore.OscWriter)">
+            <inheritdoc />
+        </member>
+        <member name="M:Buildetech.OscKit.Types.OscTrue.GetOscTypeTag">
+            <inheritdoc />
+        </member>
+    </members>
+</doc>
