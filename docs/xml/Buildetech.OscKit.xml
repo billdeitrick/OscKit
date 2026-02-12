@@ -57,6 +57,12 @@
             </summary>
             <param name="action">The callback to run.</param>
         </member>
+        <member name="M:Buildetech.OscKit.OscMessageValues.GetAddress">
+            <summary>
+            Gets the OSC message address for this packet.
+            </summary>
+            <returns>The OSC message address string.</returns>
+        </member>
         <member name="T:Buildetech.OscKit.OscServiceFactory">
             <inheritdoc/>
         </member>

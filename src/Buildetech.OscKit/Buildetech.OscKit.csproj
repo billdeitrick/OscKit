@@ -18,8 +18,11 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Buildetech.OscCore" Version="1.2.3" />
       <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.8" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\OscCore\src\Buildetech.OscCore\Buildetech.OscCore.csproj" />
     </ItemGroup>
 
 </Project>

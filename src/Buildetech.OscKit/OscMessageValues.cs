@@ -106,5 +106,14 @@ namespace Buildetech.OscKit
         {
             return _values.ReadTimestampElement(index).ToDateTime();
         }
+        
+        /// <summary>
+        /// Gets the OSC message address for this packet.
+        /// </summary>
+        /// <returns>The OSC message address string.</returns>
+        public string GetAddress()
+        {
+            return _values.Address;
+        }
     }
 }
